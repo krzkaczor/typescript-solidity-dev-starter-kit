@@ -1,17 +1,18 @@
 import { ethers } from "hardhat";
 import chai from "chai";
-import chaiAsPromised from "chai-as-promised";
 import { solidity } from "ethereum-waffle";
 import { Counter__factory, Counter } from "../typechain";
 
 chai.use(solidity);
-chai.use(chaiAsPromised);
+// chai.use(chaiAsPromised);
 const { expect } = chai;
 
 describe("Counter", () => {
   let counter: Counter;
 
   beforeEach(async () => {
+    throw new Error("HERE");
+
     // 1
     const signers = await ethers.getSigners();
 
@@ -25,7 +26,7 @@ describe("Counter", () => {
     const initialCount = await counter.getCount();
 
     // 3
-    expect(initialCount).to.eq(0);
+    expect(initialCount).to.eq(1);
     expect(counter.address).to.properAddress;
   });
 
@@ -41,7 +42,7 @@ describe("Counter", () => {
   describe("count down", async () => {
     // 5
     it("should fail due to underflow exception", () => {
-      return expect(counter.countDown()).to.eventually.be.rejectedWith(Error, 'Uint256 underflow');
+      // return expect(counter.countDown()).to.eventually.be.rejectedWith(Error, 'Uint256 underflow');
     });
 
     it("should count down", async () => {

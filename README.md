@@ -1,62 +1,34 @@
-# Typescript Solidity Dev Starter Kit
+## Repro
 
-_Updated to use Hardhat!_
+```
+yarn
+yarn build
+yarn test
+```
 
-This is a starter kit for developing, testing, and deploying smart contracts with a full Typescript environment. This stack uses [Hardhat](https://hardhat.org) as the platform layer to orchestrate all the tasks. [Ethers](https://docs.ethers.io/ethers.js/html/index.html) is used for all Ethereum interactions and testing.
+You will get something like:
 
-[Blog Post](https://medium.com/@rahulsethuram/the-new-solidity-dev-stack-buidler-ethers-waffle-typescript-tutorial-f07917de48ae)
+```
+Counter
+    count up
+      1) "before each" hook for "should count up"
 
-## Using this Project
 
-Clone this repository, then install the dependencies with `npm install`. Build everything with `npm run build`. https://hardhat.org has excellent docs, and can be used as reference for extending this project.
+  0 passing (9ms)
+  1 failing
 
-## Available Functionality
+  1) Counter
+       "before each" hook for "should count up":
+     Error: HERE
+      at ...typescript-solidity-dev-starter-kit/test/counter.ts:54:31
+      at step (test/counter.ts:33:23)
+      at Object.next (test/counter.ts:14:53)
+      at ...typescript-solidity-dev-starter-kit/test/counter.ts:8:71
+      at new Promise (<anonymous>)
+      at __awaiter (test/counter.ts:4:12)
+      at Context.<anonymous> (test/counter.ts:50:37)
+      at processImmediate (internal/timers.js:456:21)
+      at process.topLevelDomainCallback (domain.js:137:15)
+```
 
-### Build Contracts and Generate Typechain Typeings
-
-`npm run compile`
-
-### Run Contract Tests & Get Callstacks
-
-In one terminal run `npx hardhat node`
-
-Then in another run `npm run test`
-
-Notes:
-
-- As is, the tests fail on purpose. This is to show the Solidity stack traces that Buidler enables!
-- The gas usage table may be incomplete (the gas report currently needs to run with the `--network localhost` flag; see below).
-
-### Run Contract Tests and Generate Gas Usage Report
-
-In one terminal run `npx buidler node`
-
-Then in another run `npm run test -- --network localhost`
-
-Notes:
-
-- When running with this `localhost` option, you get a gas report but may not get good callstacks
-- See [here](https://github.com/cgewecke/eth-gas-reporter#installation-and-config) for how to configure the gas usage report.
-
-### Run Coverage Report for Tests
-
-`npm run coverage`
-
-Notes:
-
-- running a coverage report currently deletes artifacts, so after each coverage run you will then need to run `npx buidler clean` followed by `npm run build` before re-running tests
-- the branch coverage is 75%
-
-### Deploy to Ethereum
-
-Create/modify network config in `hardhat.config.ts` and add API key and private key, then run:
-
-`npx hardhat run --network rinkeby scripts/deploy.ts`
-
-### Verify on Etherscan
-
-Using the [hardhat-etherscan plugin](https://hardhat.org/plugins/nomiclabs-hardhat-etherscan.html), add Etherscan API key to `hardhat.config.ts`, then run:
-
-`npx hardhat verify --network rinkeby <DEPLOYED ADDRESS>`
-
-PRs and feedback welcome!
+The real line should be `14`.
